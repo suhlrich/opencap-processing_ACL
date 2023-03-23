@@ -24,7 +24,7 @@ import opensim
 import numpy as np
 from scipy import signal
 import matplotlib.pyplot as plt
-from utils import storage_to_dataframe
+from utils import storage_to_dataframe, import_metadata
 
 def lowPassFilter(time, data, lowpass_cutoff_frequency, order=4):
     
@@ -211,6 +211,11 @@ def adjustMuscleWrapping(
         overwrite=False):
     
     # Paths
+    metadataDir = os.path.join(dataDir, subject, 'sessionMetadata.yaml')
+    if os.path.exists(metadataDir):
+        metadata = import_metadata(metadataDir)
+        OpenSimModel = metadata['openSimModel']
+    
     osDir = os.path.join(dataDir, subject, 'OpenSimData')
     pathModelFolder = os.path.join(osDir, 'Model')
     pathUnscaledModel = os.path.join(baseDir, 'OpenSimPipeline', 'Models',
@@ -474,6 +479,12 @@ def generateModelWithContacts(
         dataDir, subject, poseDetector='DefaultPD', cameraSetup='DefaultModel',
         OpenSimModel="LaiArnoldModified2017_poly_withArms_weldHand",
         setPatellaMasstoZero=True, overwrite=False):
+    
+    # if there's metadata, use the model name there
+    metadataDir = os.path.join(dataDir, subject, 'sessionMetadata.yaml')
+    if os.path.exists(metadataDir):
+        metadata = import_metadata(metadataDir)
+        OpenSimModel = metadata['openSimModel']
     
     # %% Process settings.
     osDir = os.path.join(dataDir, subject, 'OpenSimData')

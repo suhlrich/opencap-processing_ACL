@@ -513,7 +513,13 @@ def generateExternalFunction(
         OpenSimModel="LaiArnoldModified2017_poly_withArms_weldHand",
         treadmill=False, build_externalFunction=True, verifyID=True, 
         externalFunctionName='F', overwrite=False):
-
+    
+    # if there's metadata - use the model name there
+    metadataDir = os.path.join(dataDir, subject, 'sessionMetadata.yaml')
+    if os.path.exists(metadataDir):
+        metadata = import_metadata(metadataDir)
+        OpenSimModel = metadata['openSimModel']
+    
     # %% Process settings.
     osDir = os.path.join(dataDir, subject, 'OpenSimData')
     pathModelFolder = os.path.join(osDir, 'Model')
@@ -1954,19 +1960,21 @@ def plotResultsDC(dataDir, subject, motion_filename, settings,
 # %% Process inputs for optimal control problem.   
 def processInputsOpenSimAD(baseDir, dataFolder, session_id, trial_name,
                            motion_type, time_window=[], repetition=None,
-                           treadmill_speed=0, overwrite=False):
+                           treadmill_speed=0, overwrite=False,
+                           downloadFromServer=True):
         
     # Path session folder.
     sessionFolder =  os.path.join(dataFolder, session_id)
     
     # Download kinematics and model.
-    print('Download kinematic data and model.')
-    pathTrial = os.path.join(sessionFolder, 'OpenSimData', 'Kinematics', 
-                             trial_name + '.mot') 
-    if not os.path.exists(pathTrial) or overwrite:
-        _ = download_kinematics(session_id, sessionFolder, 
-                                trialNames=[trial_name])
-    
+    if downloadFromServer:
+        print('Download kinematic data and model.')
+        pathTrial = os.path.join(sessionFolder, 'OpenSimData', 'Kinematics', 
+                                 trial_name + '.mot') 
+        if not os.path.exists(pathTrial) or overwrite:
+            _ = download_kinematics(session_id, sessionFolder, 
+                                    trialNames=[trial_name])
+        
     # Prepare inputs for dynamic simulations.
     # Adjust muscle wrapping.
     print('Adjust muscle wrapping surfaces.')

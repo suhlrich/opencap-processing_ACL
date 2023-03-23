@@ -32,6 +32,7 @@ import scipy.interpolate as interpolate
 import platform
 import copy
 
+from utils import import_metadata
 # %% Settings.
 def run_tracking(baseDir, dataDir, subject, settings, case='0',
                  solveProblem=True, analyzeResults=True, writeGUI=True,
@@ -56,6 +57,13 @@ def run_tracking(baseDir, dataDir, subject, settings, case='0',
     # Model info.
     # Model name.
     OpenSimModel = 'LaiArnoldModified2017_poly_withArms_weldHand'
+    
+    # if metadata in path, use this model
+    metadataDir = os.path.join(dataDir, subject, 'sessionMetadata.yaml')
+    if os.path.exists(metadataDir):
+        metadata = import_metadata(metadataDir)
+        OpenSimModel = metadata['openSimModel']
+    
     if 'OpenSimModel' in settings:  
         OpenSimModel = settings['OpenSimModel']
     model_full_name = OpenSimModel + "_scaled_adjusted"
@@ -728,8 +736,7 @@ def run_tracking(baseDir, dataDir, subject, settings, case='0',
     nContactSpheres = 6
     if heel_vGRF_threshold > 0:
         # Indices vertical ground reaction forces heel contact spheres.
-        idx_vGRF_heel = [F_map['GRFs']['Sphere_0'][1],
-                         F_map['GRFs']['Sphere_6'][1]]
+        idx_vGRF_heel = [F_map['GRFs']['Sphere_6'][1]]
     if min_ratio_vGRF:
         idx_vGRF = []
         for contactSphere in range(2*nContactSpheres):
@@ -1621,7 +1628,7 @@ def run_tracking(baseDir, dataDir, subject, settings, case='0',
         # %% Visualize results against bounds.
         visualizeResultsBounds = False
         if visualizeResultsBounds:
-            from plotsOpenSimAD import plotOptimalSolutionVSBounds
+            from sOpenSimAD import plotOptimalSolutionVSBounds
             c_wopt = {
                 'a_opt': a_opt, 'a_col_opt': a_col_opt,
                 'nF_opt': nF_opt, 'nF_col_opt': nF_col_opt,

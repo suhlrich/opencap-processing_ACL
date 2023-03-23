@@ -42,6 +42,7 @@ sys.path.append(opensimADDir)
 from utilsOpenSimAD import processInputsOpenSimAD, plotResultsDC
 from mainOpenSimAD import run_tracking
 
+
 # %% User inputs.
 '''
 Please provide:
@@ -125,11 +126,11 @@ Please contact us for any questions: https://www.opencap.ai/#contact
 #       - Linux   (Ubuntu 20.04):  converged in 856 iterations 
 # Select which example you would like to run.
 session_type = 'overground' # Options are 'overground' and 'treadmill'.
-session_id = "4d5c3eb1-1a59-4ea1-9178-d3634610561c"
-case = '0' # Change this to compare across settings.
+session_id = "S1003"
+case = '1' # Change this to compare across settings.
 # Options are 'squat', 'STS', and 'jump'.
 if session_type == 'overground': 
-    trial_name = 'STS' 
+    trial_name = 'squat' 
     if trial_name == 'squat': # Squat
         motion_type = 'squats'
         repetition = 1
@@ -164,8 +165,16 @@ solveProblem = True
 # re-run the problem.
 analyzeResults = True
 
+# is data stored locally, or would you like to download it from the server
+downloadFromServer = False
+
 # Path to where you want the data to be downloaded.
-dataFolder = os.path.join(baseDir, 'Data')
+dataFolder = 'C:/SharedGdrive/HPL_MASPL/OpenCap/Data'
+trial_name = 'S1003_SLSQUATS_L_LSTM'
+
+motion_type = 'other'
+time_window = [4.21 , 6.18]
+
 
 # %% Setup. 
 if not 'time_window' in locals():
@@ -176,7 +185,7 @@ if not 'treadmill_speed' in locals():
     treadmill_speed = 0
 settings = processInputsOpenSimAD(baseDir, dataFolder, session_id, trial_name, 
                                   motion_type, time_window, repetition,
-                                  treadmill_speed)
+                                  treadmill_speed,downloadFromServer=downloadFromServer)
 
 # %% Simulation.
 run_tracking(baseDir, dataFolder, session_id, settings, case=case, 
