@@ -28,7 +28,7 @@ def get_setup(motion_type):
 
     setups = {}   
     setups['other'] = {
-        'ipopt_tolerance': 3,
+        'ipopt_tolerance': 2,
         'weights': {
             'positionTrackingTerm': 100,
             'velocityTrackingTerm': 10,
@@ -49,13 +49,13 @@ def get_setup(motion_type):
             'hip_flexion_l': {"weight": 20},
             'hip_adduction_l': {"weight": 10},
             'hip_rotation_l': {"weight": 1},
-            'hip_flexion_r': {"weight": 20},
+            'hip_flexion_r': {"weight": 50},
             'hip_adduction_r': {"weight": 10},
             'hip_rotation_r': {"weight": 1},
             'knee_angle_l': {"weight": 10},
-            'knee_angle_r': {"weight": 10},
+            'knee_angle_r': {"weight": 50},
             'ankle_angle_l': {"weight": 10},
-            'ankle_angle_r': {"weight": 10},
+            'ankle_angle_r': {"weight": 50},
             'subtalar_angle_l': {"weight": 10},
             'subtalar_angle_r': {"weight": 10},
             'lumbar_extension': {"weight": 10},
@@ -75,14 +75,15 @@ def get_setup(motion_type):
             'pelvis_tx': {"env_bound": 0.1}},
         'ignorePassiveFiberForce': True,
         'filter_Qs_toTrack': True,
-        'cutoff_freq_Qs': 30,
+        'cutoff_freq_Qs': 4,
         'filter_Qds_toTrack': True,
-        'cutoff_freq_Qds': 30,
+        'cutoff_freq_Qds': 4,
         'filter_Qdds_toTrack': True,
-        'cutoff_freq_Qdds': 30,
+        'cutoff_freq_Qdds': 4,
         'splineQds': True,
-        'meshDensity': 100,
-        'yCalcnToes': True}
+        'meshDensity': 50,
+        'yCalcnToes': True,
+        'scaleIsometricMuscleForce':1}
     
     setups['running'] = {
         'ipopt_tolerance': 3,
@@ -383,7 +384,7 @@ def get_setup(motion_type):
         'meshDensity': 50}
     
     setups['squats_singleLeg'] = {
-        'ipopt_tolerance': 3,
+        'ipopt_tolerance': 1,
         'weights': {
             'positionTrackingTerm': 50,
             'velocityTrackingTerm': 10,

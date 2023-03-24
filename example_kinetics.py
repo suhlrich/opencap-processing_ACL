@@ -125,36 +125,36 @@ Please contact us for any questions: https://www.opencap.ai/#contact
 #       - macOS   (Monterey 12.2): converged in 869 iterations
 #       - Linux   (Ubuntu 20.04):  converged in 856 iterations 
 # Select which example you would like to run.
-session_type = 'overground' # Options are 'overground' and 'treadmill'.
-session_id = "S1003"
-case = '1' # Change this to compare across settings.
+# session_type = 'overground' # Options are 'overground' and 'treadmill'.
+# session_id = "S1003"
+# case = '1' # Change this to compare across settings.
 # Options are 'squat', 'STS', and 'jump'.
-if session_type == 'overground': 
-    trial_name = 'squat' 
-    if trial_name == 'squat': # Squat
-        motion_type = 'squats'
-        repetition = 1
-    elif trial_name == 'STS': # Sit-to-stand        
-        motion_type = 'sit_to_stand'
-        repetition = 1
-    elif trial_name == 'jump': # Jump  
-        motion_type = 'jumping'
-        time_window = [1.3, 2.2]
-# Options are 'walk_1_25ms', 'run_2_5ms', and 'run_4ms'.
-elif session_type == 'treadmill': 
-    trial_name = 'walk_1_25ms'
-    if trial_name == 'walk_1_25ms': # Walking, 1.25 m/s
-        motion_type = 'walking'
-        time_window = [1.0, 2.5]
-        treadmill_speed = 1.25
-    elif trial_name == 'run_2_5ms': # Running, 2.5 m/s
-        motion_type = 'running'
-        time_window = [1.4, 2.6]
-        treadmill_speed = 2.5
-    elif trial_name == 'run_4ms': # Running with periodic constraints, 4.0 m/s
-        motion_type = 'my_periodic_running'
-        time_window = [3.1833333, 3.85]
-        treadmill_speed = 4.0
+# if session_type == 'overground': 
+#     trial_name = 'squat' 
+#     if trial_name == 'squat': # Squat
+#         motion_type = 'squats'
+#         repetition = 1
+#     elif trial_name == 'STS': # Sit-to-stand        
+#         motion_type = 'sit_to_stand'
+#         repetition = 1
+#     elif trial_name == 'jump': # Jump  
+#         motion_type = 'jumping'
+#         time_window = [1.3, 2.2]
+# # Options are 'walk_1_25ms', 'run_2_5ms', and 'run_4ms'.
+# elif session_type == 'treadmill': 
+#     trial_name = 'walk_1_25ms'
+#     if trial_name == 'walk_1_25ms': # Walking, 1.25 m/s
+#         motion_type = 'walking'
+#         time_window = [1.0, 2.5]
+#         treadmill_speed = 1.25
+#     elif trial_name == 'run_2_5ms': # Running, 2.5 m/s
+#         motion_type = 'running'
+#         time_window = [1.4, 2.6]
+#         treadmill_speed = 2.5
+#     elif trial_name == 'run_4ms': # Running with periodic constraints, 4.0 m/s
+#         motion_type = 'my_periodic_running'
+#         time_window = [3.1833333, 3.85]
+#         treadmill_speed = 4.0
     
 # Set to True to solve the optimal control problem.
 solveProblem = True
@@ -171,6 +171,9 @@ downloadFromServer = False
 # Path to where you want the data to be downloaded.
 dataFolder = 'C:/SharedGdrive/HPL_MASPL/OpenCap/Data'
 trial_name = 'S1003_SLSQUATS_L_LSTM'
+
+session_id = "S1003"
+case = '11' # Change this to compare across settings.
 
 motion_type = 'other'
 time_window = [4.21 , 6.18]
@@ -194,3 +197,6 @@ run_tracking(baseDir, dataFolder, session_id, settings, case=case,
 # %% Plots.
 # To compare different cases, add to the cases list, eg cases=['0','1'].
 plotResultsDC(dataFolder, session_id, trial_name, settings, cases=[case])
+# plotResultsDC(dataFolder, session_id, trial_name, settings, cases=['4','5','6','7'])
+
+
